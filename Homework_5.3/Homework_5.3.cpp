@@ -8,44 +8,21 @@ class Figure
 {
 protected:
 
-int a, b, c, d, A, B, C, D, kol_storon;
-    std::string name = "";
+int kol_storon=0;
+std::string name = "";
 
 public:
 
-    
-
-    Figure(int a, int b, int c, int d, int A, int B, int C, int D)
+    Figure(int a)
     {
         name = "Фигура";
-        this->a = 0;
-        this->b = 0;
-        this->c = 0;
-        this->d = 0;
-        this->A = 0;
-        this->B = 0;
-        this->C = 0;
-        this->D = 0;
         kol_storon = 0;
     };
 
-    Figure() 
-    {
-        name = "Фигура";
-        a = 0;
-        b = 0;
-        c = 0;
-        d = 0;
-        A = 0;
-        B = 0;
-        C = 0;
-        D = 0;
-        kol_storon = 0;
-    };
 
-    virtual bool check() 
+    bool check() 
     {
-        if (a && b && c && d)
+        if (0)
             return (false); 
         else return (true);
     };
@@ -64,23 +41,25 @@ public:
 
 class Triangle : public Figure
 {
+protected:
+
+    int a, b, c, A, B, C;
+
 public:
 
-    Triangle(int a, int b, int c, int A, int B, int C) :Figure()
+    Triangle(int a, int b, int c, int A, int B, int C) :Figure(a)
     {
         name = "Треугольник";
         this->a = a;
         this->b = b;
         this->c = c;
-        this->d = 0;
         this->A = A;
         this->B = B;
         this->C = C;
-        this->D = 0;
         kol_storon = 3;
     };
 
-    bool check() override
+    virtual bool check()
     {
         if (a && b && c && ((A + B + C) == 180))
             return (true);
@@ -110,18 +89,16 @@ public:
         this->a = a;
         this->b = b;
         this->c = c;
-        this->d = 0;
         this->A = A;
         this->B = B;
         this->C = 90;
-        this->D = 0;
     };
 
     bool check() override
     {
-        if (a && b && c && ((A + B + C) == 180) && C==90)
-            return (true);
-        else return (false);
+       if (Triangle::check() && C == 90)
+          return (true);
+       else return (false);
     };
 };
 
@@ -135,16 +112,14 @@ public:
         this->a = a;
         this->b = b;
         this->c = a;
-        this->d = 0;
         this->A = A;
         this->B = B;
         this->C = A;
-        this->D = 0;
     };
 
     bool check() override
     {
-        if (a && b && c && ((A + B + C) == 180) && (C == A) && (a==c))
+        if (Triangle::check() && (C == A) && (a==c))
             return (true);
         else return (false);
     };
@@ -160,16 +135,14 @@ public:
         this->a = a;
         this->b = a;
         this->c = a;
-        this->d = 0;
         this->A = 60;
         this->B = 60;
         this->C = 60;
-        this->D = 0;
     };
 
     bool check() override
     {
-        if (a && b && c && ((A + B + C) == 180) && (C == A) && (C== B) && (a == b) && (a == c))
+        if (Triangle::check() && (C == A) && (C== B) && (a == b) && (a == c))
             return (true);
         else return (false);
     }
@@ -177,9 +150,13 @@ public:
 
 class Quadrangle : public Figure
 {
+protected:
+
+    int a, b, c, d, A, B, C, D;
+
 public:
 
-    Quadrangle(int a, int b, int c, int d, int A, int B, int C, int D) :Figure()
+    Quadrangle(int a, int b, int c, int d, int A, int B, int C, int D) :Figure(a)
     {
         name = "Четырёхугольник";
         this->a = a;
@@ -193,7 +170,7 @@ public:
         kol_storon = 4;
     };
 
-    bool check() override
+    virtual bool check()
     {
         if (a && b && c && d && ((A + B + C + D) == 360))
             return (true);
@@ -232,7 +209,7 @@ public:
 
     bool check() override
     {
-        if (a && b && c && d && ((A + B + C + D) == 360) && (a==c) && (b==d)&&(A==C)&&(B==D))
+        if (Quadrangle::check()&&(a==c) && (b==d)&&(A==C)&&(B==D))
             return (true);
         else return (false);
     };
@@ -257,7 +234,7 @@ public:
 
     bool check() override
     {
-        if (a && b && c && d && ((A + B + C + D) == 360) && (a == c) && (b == d) && (A == 90) && (B == 90)&& (C==90)&&(D==90))
+        if ( Quadrangle::check() && (a == c) && (b == d) && (A == 90) && (B == 90)&& (C==90)&&(D==90))
             return (true);
         else return (false);
     };
@@ -282,7 +259,7 @@ public:
 
     bool check() override
     {
-        if (a && b && c && d && ((A + B + C + D) == 360) && (a == c) && (b == d) && (a==b) && (A == C) && (B == D))
+        if ( Quadrangle::check() && (a == c) && (b == d) && (a==b) && (A == C) && (B == D))
             return (true);
         else return (false);
     };
@@ -307,7 +284,7 @@ public:
 
     bool check() override
     {
-        if (a && b && c && d && ((A + B + C + D) == 360) && (a == c) && (b == d) && (a == b) && (A == 90) && (B == 90) && (C==90) && (D==90))
+        if ( Quadrangle::check() && (a == c) && (b == d) && (a == b) && (A == 90) && (B == 90) && (C==90) && (D==90))
             return (true);
         else return (false);
     };
@@ -318,7 +295,7 @@ int main()
     system("chcp 1251");
     system("cls");
 
-    Figure fi(0, 0, 0, 0, 0, 0, 0, 0);
+    Figure fi(0);
     Triangle tr(10, 20, 30, 50, 60, 70);
     Right_triangle rt(10, 20, 30, 50, 60);
     Right_triangle rt1(10, 20, 30, 50, 40);
